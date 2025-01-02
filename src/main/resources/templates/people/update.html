@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update person</title>
+</head>
+<body>
+<form th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}" method="post">
+    <label for="fullName">Enter your first and last name: </label>
+    <input type="text" th:field="*{fullName}" id="fullName">
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name error</div>
+
+    <br>
+    <label for="birthYear">Enter your year of birth: </label>
+    <input type="text" th:field="*{birthYear}" id="birthYear">
+    <div style="color:red" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}">Age error</div>
+
+    <br>
+    <input type="hidden" name="_method" value="PATCH" />
+    <input type="submit" value="Update!">
+</form>

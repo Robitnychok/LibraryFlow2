@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Book</title>
+</head>
+<body>
+
+<h2>Book Information</h2>
+<p th:text="${book.title + ', ' + book.author + ', ' + book.publicationYear}">Book Details</p>
+
+<hr/>
+
+<div th:if="${book.person == null}">
+    <p>This book is free. Whom should it be assigned to?</p>
+
+    <form th:method="POST" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+        <input type="hidden" name="_method" value="POST">
+        <label for="person">Select the person</label>
+        <select name="person" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+            </option>
+        </select>
+        <input type="submit" value="Assign book"/>
+    </form>
+</div>
+
+<div th:if="${book.person != null}">
+    <p>This book is currently with:
+        <span th:text="${book_owner.fullName}">
+            Person's Name
+        </span>
+    </p>
+    <form th:action="@{'/books/' + ${book.id} + '/release'}" method="post">
+        <input type="hidden" name="ownerId" th:value="${book_owner.id}" />
+        <button type="submit">Release Book</button>
+    </form>
+</div>
+
+<hr/>
+
+<a th:href="@{/books/{id}/update(id=${book.id})}">
+    <input type="button" value="Update">
+</a>
+
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.id})}">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

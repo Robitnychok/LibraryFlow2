@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Person</title>
+</head>
+<body>
+
+<p th:text="${person.getFullName() + ', ' + person.getBirthYear()}">Person Information</p>
+
+<hr/>
+
+<div th:if="${books != null && !books.isEmpty()}">
+    <ul>
+        <li th:each="book : ${books}">
+            <span th:text="${book.title + ', ' + book.author + ', ' + book.publicationYear}"
+            th:style = "${book.isExpired() ? 'color: red' : 'color: black'}">
+                Book information</span>
+        </li>
+    </ul>
+</div>
+<div th:unless="${books != null && !books.isEmpty()}">
+    <p>The person does not have any books.</p>
+</div>
+
+<hr/>
+
+<!-- Кнопки для редактирования и удаления -->
+<a th:href="@{/people/{id}/update(id=${person.getId()})}">
+    <input type="submit" value="Update">
+</a>
+
+<br/>
+
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>

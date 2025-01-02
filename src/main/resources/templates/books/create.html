@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create book</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/books}" th:object="${books}">
+
+    <label for="title">Enter the title of the book: </label>
+    <input type="text" th:field="*{title}" id="title">
+    <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+
+    <br>
+    <label for="author">Enter the author of the book: </label>
+    <input type="text" th:field="*{author}" id="author">
+    <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author error</div>
+
+    <br>
+    <label for="publicationYear">Enter the publication year of the book: </label>
+    <input type="text" th:field="*{publicationYear}" id="publicationYear">
+    <div style="color:red" th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}">Publication year error</div>
+
+    <br>
+    <input type="submit" value="Create!">
+</form>
+
+</body>
+</html>
